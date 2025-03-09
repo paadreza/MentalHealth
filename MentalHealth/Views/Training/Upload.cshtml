@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Upload Training Data";
+}
+
+<div class="container mt-4">
+    <h2>Upload Training Data</h2>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            @Html.ValidationSummary()
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="Upload" enctype="multipart/form-data" method="post">
+                <div class="mb-3">
+                    <label for="file" class="form-label">CSV File</label>
+                    <input type="file" class="form-control" id="file" name="file" accept=".csv" required>
+                    <div class="form-text">Upload a CSV file with training data. The file should have 17 columns: 16 symptom values (0-10) and a diagnosis label.</div>
+                </div>
+
+                <div class="mb-3">
+                    <h5>Expected CSV Format:</h5>
+                    <pre>Anxiety,Depression,SleepIssues,MoodSwings,ConcentrationIssues,Fatigue,SocialWithdrawal,Irritability,AppetiteChanges,PhysicalSymptoms,TraumaHistory,ThoughtPatterns,SubstanceUse,Paranoia,Hallucinations,EmotionalChanges,Diagnosis
+8,3,7,4,6,5,4,6,3,7,2,5,1,2,0,4,Anxiety
+3,8,7,6,7,8,8,5,7,4,5,7,2,1,0,6,Depression
+...</pre>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Upload and Train</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>

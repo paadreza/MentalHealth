@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "Training Management";
+}
+
+<div class="container mt-4">
+    <h2>Training Data Management</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Upload Training Data</div>
+                <div class="card-body">
+                    <p>Upload a CSV file with training data to improve the model's accuracy.</p>
+                    <a asp-action="Upload" class="btn btn-primary">Upload Data</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">Train Model</div>
+                <div class="card-body">
+                    <p>Train the model with all available data in the database.</p>
+                    <form asp-action="Train" method="post">
+                        <button type="submit" class="btn btn-success">Train Model</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">Model Information</div>
+        <div class="card-body">
+            <p>The current model is trained with multiple symptoms including:</p>
+            <ul>
+                <li>Anxiety</li>
+                <li>Depression</li>
+                <li>Sleep Issues</li>
+                <li>Mood Swings</li>
+                <li>Concentration Issues</li>
+                <li>Fatigue</li>
+                <li>Social Withdrawal</li>
+                <li>Irritability</li>
+                <li>Appetite Changes</li>
+                <li>Physical Symptoms</li>
+                <li>Trauma History</li>
+                <li>Thought Patterns</li>
+                <li>Substance Use</li>
+                <li>Paranoia</li>
+                <li>Hallucinations</li>
+                <li>Emotional Changes</li>
+            </ul>
+        </div>
+    </div>
+</div>
