@@ -17,6 +17,9 @@ namespace MentalHealth.Services
             _logger = logger;
             _mlContext = new MLContext(seed: 1);
 
+            // Initialize the non-nullable field '_trainedModel' to avoid warning
+            _trainedModel = _mlContext.Model.Load("path/to/initial/model", out var modelInputSchema);
+
             // Load or train initial model
             InitializeModel();
         }

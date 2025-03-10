@@ -1,6 +1,4 @@
-﻿
-using CsvHelper.Configuration;
-using global::MentalHealth.Models;
+﻿using CsvHelper.Configuration;
 using MentalHealth.Models;
 namespace MentalHealth.Utilites
 {

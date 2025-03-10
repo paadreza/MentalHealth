@@ -94,6 +94,9 @@ namespace MentalHealth.Controllers
                 TempData["ErrorMessage"] = $"Error training model: {ex.Message}";
             }
 
+            // Add await Task.CompletedTask to avoid warning
+            await Task.CompletedTask;
+
             return RedirectToAction("Index");
         }
     }

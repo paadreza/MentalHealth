@@ -1,7 +1,6 @@
 ﻿// Utils/ConfusionMatrixExtensions.cs
 using Microsoft.ML.Data;
 using Microsoft.ML;
-using Microsoft.ML.Data;
 using MentalHealth.Models;
 using MentalHealth.Utils;
 namespace MentalHealth.Utils

@@ -2,7 +2,150 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <!-- Hero Section -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <div class="card border-0 bg-light shadow-sm">
+                <div class="card-body p-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-7">
+                            <h1 class="display-4 text-primary fw-bold mb-3">Mental Health AI Assistant</h1>
+                            <p class="lead mb-4">
+                                Using advanced machine learning to provide mental health assessments and support.
+                                Our AI-powered system analyzes symptoms to help identify potential mental health concerns.
+                            </p>
+                            <div class="mb-4">
+                                <a asp-controller="Diagnosis" asp-action="Index" class="btn btn-primary btn-lg px-4 me-2">
+                                    <i class="fas fa-stethoscope me-2"></i>Start Assessment
+                                </a>
+                                <a href="#features" class="btn btn-outline-primary btn-lg px-4">
+                                    <i class="fas fa-info-circle me-2"></i>Learn More
+                                </a>
+                            </div>
+                            <div class="d-flex align-items-center small text-muted">
+                                <i class="fas fa-shield-alt me-2"></i>
+                                <span>Your data is private and secure</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 text-center d-none d-lg-block">
+                            <img src="https://cdn.pixabay.com/photo/2021/03/02/12/03/mental-health-6062511_1280.png" alt="Mental Health Illustration" class="img-fluid" style="max-height: 300px;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="row mb-5" id="features">
+        <div class="col-lg-12 text-center mb-4">
+            <h2 class="text-primary fw-bold">How It Works</h2>
+            <p class="text-muted">Our mental health assessment system combines AI with clinical knowledge</p>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-clipboard-list text-primary fa-2x"></i>
+                    </div>
+                    <h4 class="card-title mb-3">Symptom Assessment</h4>
+                    <p class="card-text text-muted">
+                        Complete a comprehensive symptom assessment to help our AI understand your current mental health state.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-brain text-primary fa-2x"></i>
+                    </div>
+                    <h4 class="card-title mb-3">AI Analysis</h4>
+                    <p class="card-text text-muted">
+                        Our AI algorithms analyze your symptoms against trained models to identify potential mental health conditions.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="fas fa-clipboard-check text-primary fa-2x"></i>
+                    </div>
+                    <h4 class="card-title mb-3">Personalized Results</h4>
+                    <p class="card-text text-muted">
+                        Receive a detailed report with potential diagnoses, confidence levels, and recommended next steps.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Call to Action -->
+    <div class="row mb-5">
+        <div class="col-lg-12">
+            <div class="card bg-primary text-white shadow-sm">
+                <div class="card-body p-5 text-center">
+                    <h2 class="mb-3">Ready to get started?</h2>
+                    <p class="lead mb-4">Take the first step towards understanding your mental health</p>
+                    <a asp-controller="Diagnosis" asp-action="Index" class="btn btn-light btn-lg px-4">
+                        <i class="fas fa-stethoscope me-2"></i>Start Assessment Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Testimonials/Info Section -->
+    <div class="row">
+        <div class="col-lg-12 text-center mb-4">
+            <h2 class="text-primary fw-bold">Why Use AI for Mental Health?</h2>
+            <p class="text-muted">Benefits of technology-assisted mental health assessment</p>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="card-title"><i class="fas fa-lock text-primary me-2"></i>Privacy & Accessibility</h4>
+                    <p class="card-text text-muted">
+                        AI assessments provide a private, stigma-free way to check your mental health from anywhere, at any time, 
+                        removing barriers to taking the first step.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body p-4">
+                    <h4 class="card-title"><i class="fas fa-chart-line text-primary me-2"></i>Early Detection</h4>
+                    <p class="card-text text-muted">
+                        Regular assessments can help identify potential issues before they become severe, 
+                        facilitating early intervention and better outcomes.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+}

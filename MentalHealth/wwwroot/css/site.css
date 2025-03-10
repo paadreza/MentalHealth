@@ -1,22 +1,179 @@
+:root {
+  /* رنگ‌های اصلی */
+  --primary-color: #4a6fa5;
+  --primary-light: #6b8bb5;
+  --primary-dark: #345685;
+  --secondary-color: #5ac0ab;
+  --accent-color: #f5cb5c;
+  --text-color: #333333;
+  --light-text: #666666;
+  --background-color: #ffffff;
+  --light-background: #f8f9fa;
+  --border-color: #dee2e6;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --info-color: #17a2b8;
+}
+
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
+  font-size: 16px;
   position: relative;
   min-height: 100%;
 }
 
+@media (max-width: 576px) {
+  html {
+    font-size: 14px;
+  }
+}
+
 body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
   margin-bottom: 60px;
+  background-color: var(--background-color);
+  line-height: 1.6;
+}
+
+/* Navigation */
+.navbar {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-color) !important;
+}
+
+.navbar-brand {
+  font-weight: 600;
+  color: var(--primary-color) !important;
+  font-size: 1.5rem;
+}
+
+.nav-link {
+  font-weight: 500;
+  color: var(--light-text) !important;
+  transition: color 0.3s;
+}
+
+.nav-link:hover, .nav-link:focus {
+  color: var(--primary-color) !important;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn-outline-primary {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Cards */
+.card {
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+.card-header {
+  background-color: var(--light-background);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+}
+
+/* Form elements */
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 0.2rem rgba(74, 111, 165, 0.25);
+}
+
+/* Range sliders */
+.form-range::-webkit-slider-thumb {
+  background-color: var(--primary-color);
+}
+
+.form-range::-moz-range-thumb {
+  background-color: var(--primary-color);
+}
+
+.form-range::-ms-thumb {
+  background-color: var(--primary-color);
+}
+
+/* Footer */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  line-height: 60px;
+  background-color: var(--light-background);
+}
+
+/* Utilities */
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.text-secondary {
+  color: var(--secondary-color) !important;
+}
+
+.bg-light {
+  background-color: var(--light-background) !important;
+}
+
+/* Additional MentalHealth app specific styles */
+.symptom-card {
+  margin-bottom: 1.5rem;
+}
+
+.result-container {
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--light-background);
+}
+
+.diagnosis-result {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.probability-meter {
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #e9ecef;
+  margin-bottom: 0.5rem;
+}
+
+.probability-fill {
+  height: 100%;
+  border-radius: 0.25rem;
+  background-color: var(--primary-color);
 }

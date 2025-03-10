@@ -1,54 +1,120 @@
 ﻿@model MentalHealth.Models.MentalHealthSymptoms
 
 <div class="container mt-4">
-    <h2 class="mb-4">Mental Health Symptoms Assessment</h2>
+    <div class="row mb-4">
+        <div class="col-lg-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h1 class="card-title text-primary">
+                        <i class="fas fa-stethoscope me-2"></i>Mental Health Assessment
+                    </h1>
+                    <p class="card-text text-muted">
+                        This assessment helps identify potential mental health concerns based on your symptoms. 
+                        Move the sliders to indicate the severity of each symptom you're experiencing, from 0 (none) to 10 (severe).
+                        The AI-powered system will analyze your symptoms and provide a preliminary diagnosis.
+                    </p>
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i> This is not a substitute for professional medical advice. Always consult with a qualified healthcare provider.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @if (!ViewData.ModelState.IsValid)
     {
         <div class="alert alert-danger">
+            <i class="fas fa-exclamation-triangle me-2"></i>
             @Html.ValidationSummary()
         </div>
     }
 
     <form asp-action="Diagnose" asp-controller="Diagnosis" method="post">
         <div class="row">
-            <!-- Common symptoms -->
-            <div class="col-md-6 mb-3">
-                <label asp-for="Anxiety" class="form-label">Anxiety Level</label>
-                <input type="range" class="form-range" asp-for="Anxiety" min="0" max="10" step="1" />
-                <div class="d-flex justify-content-between">
-                    <span>None (0)</span>
-                    <span>Severe (10)</span>
+            <div class="col-lg-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-clipboard-list me-2"></i>Common Symptoms</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- Common symptoms -->
+                            <div class="col-md-6 mb-4">
+                                <div class="card symptom-card h-100">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="fas fa-head-side-virus me-2 text-primary"></i>
+                                            Anxiety Level
+                                        </h6>
+                                        <p class="small text-muted mb-3">Rate your feelings of anxiety, worry, or nervousness</p>
+                                        <input type="range" class="form-range" asp-for="Anxiety" min="0" max="10" step="1" />
+                                        <div class="d-flex justify-content-between small">
+                                            <span class="text-muted">None (0)</span>
+                                            <span id="anxietyValue" class="badge bg-primary">5</span>
+                                            <span class="text-muted">Severe (10)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="card symptom-card h-100">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="fas fa-cloud-rain me-2 text-primary"></i>
+                                            Depression Level
+                                        </h6>
+                                        <p class="small text-muted mb-3">Rate your feelings of sadness, emptiness, or hopelessness</p>
+                                        <input type="range" class="form-range" asp-for="Depression" min="0" max="10" step="1" />
+                                        <div class="d-flex justify-content-between small">
+                                            <span class="text-muted">None (0)</span>
+                                            <span id="depressionValue" class="badge bg-primary">5</span>
+                                            <span class="text-muted">Severe (10)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="card symptom-card h-100">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="fas fa-bed me-2 text-primary"></i>
+                                            Sleep Issues
+                                        </h6>
+                                        <p class="small text-muted mb-3">Rate your difficulties with falling asleep, staying asleep, or waking up too early</p>
+                                        <input type="range" class="form-range" asp-for="SleepIssues" min="0" max="10" step="1" />
+                                        <div class="d-flex justify-content-between small">
+                                            <span class="text-muted">None (0)</span>
+                                            <span id="sleepIssuesValue" class="badge bg-primary">5</span>
+                                            <span class="text-muted">Severe (10)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="card symptom-card h-100">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="fas fa-exchange-alt me-2 text-primary"></i>
+                                            Mood Swings
+                                        </h6>
+                                        <p class="small text-muted mb-3">Rate how often or intensely your mood changes</p>
+                                        <input type="range" class="form-range" asp-for="MoodSwings" min="0" max="10" step="1" />
+                                        <div class="d-flex justify-content-between small">
+                                            <span class="text-muted">None (0)</span>
+                                            <span id="moodSwingsValue" class="badge bg-primary">5</span>
+                                            <span class="text-muted">Severe (10)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="col-md-6 mb-3">
-                <label asp-for="Depression" class="form-label">Depression Level</label>
-                <input type="range" class="form-range" asp-for="Depression" min="0" max="10" step="1" />
-                <div class="d-flex justify-content-between">
-                    <span>None (0)</span>
-                    <span>Severe (10)</span>
-                </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label asp-for="SleepIssues" class="form-label">Sleep Issues</label>
-                <input type="range" class="form-range" asp-for="SleepIssues" min="0" max="10" step="1" />
-                <div class="d-flex justify-content-between">
-                    <span>None (0)</span>
-                    <span>Severe (10)</span>
-                </div>
-            </div>
-
-            <div class="col-md-6 mb-3">
-                <label asp-for="MoodSwings" class="form-label">Mood Swings</label>
-                <input type="range" class="form-range" asp-for="MoodSwings" min="0" max="10" step="1" />
-                <div class="d-flex justify-content-between">
-                    <span>None (0)</span>
-                    <span>Severe (10)</span>
-                </div>
-            </div>
-
+            
             <div class="col-md-6 mb-3">
                 <label asp-for="ConcentrationIssues" class="form-label">Concentration Issues</label>
                 <input type="range" class="form-range" asp-for="ConcentrationIssues" min="0" max="10" step="1" />
@@ -157,30 +223,91 @@
                     <span>Severe (10)</span>
                 </div>
             </div>
-        </div>
 
-        <div class="mt-4">
-            <button type="submit" class="btn btn-primary">Analyze Symptoms</button>
+            <div class="col-lg-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-brain me-2"></i>Cognitive Symptoms</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <div class="card symptom-card h-100">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="fas fa-head-side-brain me-2 text-primary"></i>
+                                            Concentration Issues
+                                        </h6>
+                                        <p class="small text-muted mb-3">Rate your difficulty concentrating or focusing</p>
+                                        <input type="range" class="form-range" asp-for="ConcentrationIssues" min="0" max="10" step="1" />
+                                        <div class="d-flex justify-content-between small">
+                                            <span class="text-muted">None (0)</span>
+                                            <span id="concentrationIssuesValue" class="badge bg-primary">5</span>
+                                            <span class="text-muted">Severe (10)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <div class="card symptom-card h-100">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="fas fa-battery-quarter me-2 text-primary"></i>
+                                            Fatigue
+                                        </h6>
+                                        <p class="small text-muted mb-3">Rate your feelings of tiredness or lack of energy</p>
+                                        <input type="range" class="form-range" asp-for="Fatigue" min="0" max="10" step="1" />
+                                        <div class="d-flex justify-content-between small">
+                                            <span class="text-muted">None (0)</span>
+                                            <span id="fatigueValue" class="badge bg-primary">5</span>
+                                            <span class="text-muted">Severe (10)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <button type="submit" class="btn btn-primary btn-lg px-5">
+                            <i class="fas fa-stethoscope me-2"></i>Generate Diagnosis
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-
     <script>
-        // Add real-time value display for range inputs
-        document.querySelectorAll('input[type="range"]').forEach(function(input) {
-            input.addEventListener('input', function() {
-                var valueDisplay = this.parentElement.querySelector('.current-value');
-                if (!valueDisplay) {
-                    valueDisplay = document.createElement('div');
-                    valueDisplay.className = 'current-value text-center mt-2';
-                    this.parentElement.appendChild(valueDisplay);
+        // Update the badge values when sliders change
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliders = document.querySelectorAll('input[type="range"]');
+            
+            // Initialize all badges with current values
+            sliders.forEach(slider => {
+                const id = slider.id;
+                const valueDisplay = document.getElementById(id + 'Value');
+                if (valueDisplay) {
+                    valueDisplay.textContent = slider.value;
                 }
-                valueDisplay.textContent = 'Current value: ' + this.value;
+            });
+            
+            // Add event listeners to update values when sliders change
+            sliders.forEach(slider => {
+                slider.addEventListener('input', function() {
+                    const id = this.id;
+                    const valueDisplay = document.getElementById(id + 'Value');
+                    if (valueDisplay) {
+                        valueDisplay.textContent = this.value;
+                    }
+                });
             });
         });
     </script>
