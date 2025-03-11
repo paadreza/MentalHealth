@@ -3,7 +3,7 @@
 <div class="container mt-4">
     <div class="row mb-4">
         <div class="col-lg-12">
-            <div class="card shadow-sm border-0">
+            <div class="card shadow-md border-0 animated-item">
                 <div class="card-body">
                     <h1 class="card-title text-primary mb-4">
                         <i class="fas fa-clipboard-check me-2"></i>Assessment Results
@@ -17,15 +17,15 @@
                         <div class="row align-items-center mb-4">
                             <div class="col-md-8">
                                 <h2 class="diagnosis-result mb-2">
-                                    <i class="fas fa-stethoscope me-2"></i>Primary Diagnosis: <span class="text-primary">@Model.Diagnosis</span>
+                                    <i class="fas fa-stethoscope me-2"></i>Primary Diagnosis: <span>@Model.Diagnosis</span>
                                 </h2>
                                 <p class="text-muted">Based on your symptom assessment, our AI system has identified the following potential diagnosis.</p>
                             </div>
                             <div class="col-md-4 text-center">
-                                <div class="p-3 rounded-circle bg-light d-inline-flex align-items-center justify-content-center" style="width: 150px; height: 150px;">
+                                <div class="p-3 rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 150px; height: 150px; background: linear-gradient(135deg, var(--primary-light), var(--primary-color));">
                                     <div class="text-center">
-                                        <h3 class="mb-0 text-primary">@(Math.Round(Model.Probability * 100, 0))%</h3>
-                                        <p class="mb-0 small text-muted">Confidence</p>
+                                        <h3 class="mb-0 text-white" id="confidence-number">@(Math.Round(Model.Probability * 100, 0))</h3>
+                                        <p class="mb-0 small text-white">Confidence %</p>
                                     </div>
                                 </div>
                             </div>
@@ -33,7 +33,7 @@
                         
                         <h4 class="mb-3"><i class="fas fa-chart-bar me-2 text-primary"></i>Confidence Level</h4>
                         <div class="probability-meter mb-3">
-                            <div class="probability-fill" style="width: @(Model.Probability * 100)%"></div>
+                            <div class="probability-fill" style="width: 0%;" data-value="@(Model.Probability * 100)%"></div>
                         </div>
                         <div class="d-flex justify-content-between mb-4">
                             <span class="small text-muted">Low Confidence</span>
@@ -46,93 +46,214 @@
     </div>
     
     <div class="row mb-4">
-        <div class="col-md-6 mb-4">
-            <div class="card shadow-sm h-100">
+        <div class="col-lg-7 mb-4">
+            <div class="card shadow-sm h-100 animated-item" style="--i: 2">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>Recommendations</h5>
+                    <h5 class="mb-0"><i class="fas fa-chart-radar me-2"></i>Symptom Profile</h5>
                 </div>
                 <div class="card-body">
-                    @if (Model.Recommendations?.Any() == true)
-                    {
-                        <ul class="list-group list-group-flush">
-                            @foreach (var recommendation in Model.Recommendations)
-                            {
-                                <li class="list-group-item border-0 ps-0">
-                                    <i class="fas fa-check-circle text-success me-2"></i> @recommendation
-                                </li>
-                            }
-                        </ul>
-                    }
-                    else
-                    {
-                        <p class="text-muted">
-                            <i class="fas fa-info-circle me-2"></i>
-                            Based on your results, we recommend consulting with a mental health professional to discuss your symptoms in detail.
-                        </p>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item border-0 ps-0">
-                                <i class="fas fa-check-circle text-success me-2"></i> 
-                                Consult with a licensed therapist or psychiatrist
-                            </li>
-                            <li class="list-group-item border-0 ps-0">
-                                <i class="fas fa-check-circle text-success me-2"></i> 
-                                Keep track of your symptoms and their intensity
-                            </li>
-                            <li class="list-group-item border-0 ps-0">
-                                <i class="fas fa-check-circle text-success me-2"></i> 
-                                Maintain healthy lifestyle habits including regular sleep patterns
-                            </li>
-                        </ul>
-                    }
+                    <p class="text-muted mb-4">This radar chart visualizes the severity of your reported symptoms, showing which areas may be most affected.</p>
+                    <div class="chart-container" style="position: relative; height: 300px;">
+                        <canvas id="symptomChart" 
+                            data-labels='["Anxiety", "Depression", "Sleep Issues", "Mood Swings", "Concentration", "Fatigue", "Social Withdrawal", "Irritability", "Appetite", "Physical"]'
+                            data-values='[@Model.Symptoms.Anxiety, @Model.Symptoms.Depression, @Model.Symptoms.SleepIssues, @Model.Symptoms.MoodSwings, @Model.Symptoms.ConcentrationIssues, @Model.Symptoms.Fatigue, @Model.Symptoms.SocialWithdrawal, @Model.Symptoms.Irritability, @Model.Symptoms.AppetiteChanges, @Model.Symptoms.PhysicalSymptoms]'>
+                        </canvas>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="col-md-6 mb-4">
-            <div class="card shadow-sm h-100">
+        <div class="col-lg-5 mb-4">
+            <div class="card shadow-sm h-100 animated-item" style="--i: 3">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0"><i class="fas fa-brain me-2"></i>Symptom Analysis</h5>
+                    <h5 class="mb-0"><i class="fas fa-lightbulb me-2"></i>What This Means</h5>
                 </div>
                 <div class="card-body">
-                    <p class="text-muted small mb-3">This chart shows which symptoms contributed most to the diagnosis.</p>
+                    <p class="text-muted mb-3">Here's what your assessment results may indicate:</p>
                     
-                    @if (Model.SymptomContributions?.Any() == true)
-                    {
-                        @foreach (var symptom in Model.SymptomContributions.OrderByDescending(s => s.Value).Take(5))
-                        {
-                            <div class="mb-3">
-                                <div class="d-flex justify-content-between mb-1">
-                                    <label class="small">@symptom.Key</label>
-                                    <span class="small text-primary">@(Math.Round(symptom.Value * 100, 0))%</span>
-                                </div>
-                                <div class="probability-meter">
-                                    <div class="probability-fill" style="width: @(symptom.Value * 100)%"></div>
-                                </div>
-                            </div>
+                    <div class="diagnosis-explanation">
+                        @{
+                            var explanation = GetDiagnosisExplanation(Model.Diagnosis);
                         }
-                    }
-                    else
-                    {
-                        <p class="text-muted">Detailed symptom analysis is not available for this assessment.</p>
-                    }
+                        <div class="alert alert-primary border-0 mb-3">
+                            <i class="fas fa-info-circle me-2"></i> @explanation.Description
+                        </div>
+                        
+                        <h6 class="mt-4 mb-3"><i class="fas fa-list-check me-2 text-primary"></i>Common Features:</h6>
+                        <ul class="feature-list mb-4">
+                            @foreach(var feature in explanation.Features)
+                            {
+                                <li class="mb-2">@feature</li>
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <div class="row mb-4">
-        <div class="col-md-12">
-            <div class="card shadow-sm">
-                <div class="card-body text-center">
-                    <p class="text-muted mb-4">What would you like to do next?</p>
-                    <a asp-action="Index" class="btn btn-primary me-2">
-                        <i class="fas fa-redo me-2"></i>Start New Assessment
-                    </a>
-                    <a href="#" class="btn btn-outline-primary">
-                        <i class="fas fa-print me-2"></i>Print Results
-                    </a>
+        <div class="col-lg-12">
+            <div class="card shadow-sm animated-item" style="--i: 4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-hand-holding-medical me-2"></i>Next Steps</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-4">Based on your assessment, consider the following next steps:</p>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <div class="next-step-card text-center p-4 h-100 rounded border">
+                                <div class="icon-container mb-3">
+                                    <i class="fas fa-user-doctor fa-2x text-primary"></i>
+                                </div>
+                                <h5>Consult a Professional</h5>
+                                <p class="small text-muted">Share these results with a healthcare provider who can provide a proper diagnosis and treatment plan.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="next-step-card text-center p-4 h-100 rounded border">
+                                <div class="icon-container mb-3">
+                                    <i class="fas fa-book-medical fa-2x text-primary"></i>
+                                </div>
+                                <h5>Learn More</h5>
+                                <p class="small text-muted">Educate yourself about your potential diagnosis from reliable mental health resources.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-4">
+                            <div class="next-step-card text-center p-4 h-100 rounded border">
+                                <div class="icon-container mb-3">
+                                    <i class="fas fa-hands-holding-circle fa-2x text-primary"></i>
+                                </div>
+                                <h5>Self-Care Steps</h5>
+                                <p class="small text-muted">Practice stress management, maintain a healthy lifestyle, and seek social support.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-center mt-4">
+                        <a asp-controller="Diagnosis" asp-action="Index" class="btn btn-primary me-3">
+                            <i class="fas fa-redo me-2"></i> Start New Assessment
+                        </a>
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">
+                            <i class="fas fa-home me-2"></i> Return Home
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@functions {
+    public class DiagnosisInfo
+    {
+        public string Description { get; set; } = string.Empty;
+        public List<string> Features { get; set; } = new List<string>();
+    }
+    
+    public DiagnosisInfo GetDiagnosisExplanation(string diagnosis)
+    {
+        if (string.IsNullOrEmpty(diagnosis))
+        {
+            return new DiagnosisInfo
+            {
+                Description = "Unable to determine a specific diagnosis based on the provided symptoms.",
+                Features = new List<string> 
+                { 
+                    "Please consult with a mental health professional for a thorough evaluation",
+                    "Continue monitoring your symptoms",
+                    "Consider keeping a symptom diary",
+                    "Maintain regular self-care practices"
+                }
+            };
+        }
+
+        switch(diagnosis.ToLower())
+        {
+            case "major depressive disorder":
+            case "depression":
+                return new DiagnosisInfo
+                {
+                    Description = "Major Depressive Disorder is characterized by persistent feelings of sadness and loss of interest in activities once enjoyed.",
+                    Features = new List<string> 
+                    { 
+                        "Persistent sad, anxious, or 'empty' mood",
+                        "Loss of interest or pleasure in hobbies and activities",
+                        "Decreased energy, fatigue, feeling 'slowed down'",
+                        "Difficulty sleeping, early-morning awakening, or oversleeping"
+                    }
+                };
+                
+            case "generalized anxiety disorder":
+            case "anxiety":
+                return new DiagnosisInfo
+                {
+                    Description = "Generalized Anxiety Disorder involves excessive anxiety or worry on most days for at least 6 months.",
+                    Features = new List<string> 
+                    { 
+                        "Persistent and excessive worry about various things",
+                        "Difficulty controlling the worry",
+                        "Restlessness or feeling keyed up or on edge",
+                        "Fatigue, difficulty concentrating, irritability, sleep disturbance"
+                    }
+                };
+                
+            case "bipolar disorder":
+            case "bipolar":
+                return new DiagnosisInfo
+                {
+                    Description = "Bipolar Disorder is characterized by unusual shifts in mood, energy, activity levels, and concentration.",
+                    Features = new List<string> 
+                    { 
+                        "Manic episodes (abnormally elevated mood and energy)",
+                        "Depressive episodes (feeling very sad and hopeless)",
+                        "Extreme mood swings between emotional highs and lows",
+                        "Changes in sleep patterns, energy level, and decision-making ability"
+                    }
+                };
+                
+            case "schizophrenia":
+                return new DiagnosisInfo
+                {
+                    Description = "Schizophrenia is a serious mental disorder characterized by distorted thinking, emotions, perceptions, and behavior.",
+                    Features = new List<string> 
+                    { 
+                        "Hallucinations (seeing, hearing, or feeling things that aren't there)",
+                        "Delusions (false beliefs that don't change, even with evidence)",
+                        "Disorganized thinking and speech",
+                        "Extremely disorganized or abnormal motor behavior"
+                    }
+                };
+                
+            case "post-traumatic stress disorder":
+            case "ptsd":
+                return new DiagnosisInfo
+                {
+                    Description = "Post-Traumatic Stress Disorder develops in some people who have experienced a shocking, scary, or dangerous event.",
+                    Features = new List<string> 
+                    { 
+                        "Intrusive memories of the traumatic event",
+                        "Avoidance of situations that remind you of the event",
+                        "Negative changes in thinking and mood",
+                        "Changes in physical and emotional reactions"
+                    }
+                };
+                
+            default:
+                return new DiagnosisInfo
+                {
+                    Description = "Your symptom profile indicates a potential mental health concern that may require professional attention.",
+                    Features = new List<string> 
+                    { 
+                        "Your symptom pattern shows several areas of concern",
+                        "A healthcare professional can provide a more accurate diagnosis",
+                        "Early intervention and treatment can lead to better outcomes",
+                        "Self-care and support systems are important for mental wellbeing"
+                    }
+                };
+        }
+    }
+}

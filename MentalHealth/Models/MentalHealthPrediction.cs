@@ -14,5 +14,8 @@ namespace MentalHealth.Models
         public DateTime PredictionDate { get; set; } = DateTime.Now;
 
         public Dictionary<string, float> SymptomContributions { get; set; } = new Dictionary<string, float>();
+        
+        // Store the original symptoms for visualization
+        public MentalHealthSymptoms Symptoms { get; set; }
     }
 }

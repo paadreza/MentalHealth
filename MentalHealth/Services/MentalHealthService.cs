@@ -124,6 +124,7 @@ namespace MentalHealth.Services
                     Diagnosis = diagnosis,
                     Probability = probability,
                     Recommendations = GenerateRecommendations(diagnosis, symptoms),
+                    Symptoms = symptoms,
                     SymptomContributions = new Dictionary<string, float>
             {
                 { "Anxiety", symptoms.Anxiety / 10f },
