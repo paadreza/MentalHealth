@@ -6,7 +6,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/MentalHealth/bin/Debug/net6.0/MentalHealth.dll",
+            "program": "${workspaceFolder}/MentalHealth/bin/Debug/net8.0/MentalHealth.dll",
             "args": [],
             "cwd": "${workspaceFolder}/MentalHealth",
             "stopAtEntry": false,

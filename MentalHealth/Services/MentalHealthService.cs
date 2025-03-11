@@ -9,7 +9,7 @@ namespace MentalHealth.Services
     {
         private readonly ILogger<MentalHealthService> _logger;
         private readonly MLContext _mlContext;
-        private ITransformer _trainedModel;
+        private ITransformer? _trainedModel;
         private List<string> _availableDiagnoses = new List<string> { "Anxiety", "Depression", "Bipolar", "Schizophrenia", "Other" };
 
         public MentalHealthService(ILogger<MentalHealthService> logger)
@@ -17,9 +17,9 @@ namespace MentalHealth.Services
             _logger = logger;
             _mlContext = new MLContext(seed: 1);
 
-            // Initialize the non-nullable field '_trainedModel' to avoid warning
-            _trainedModel = _mlContext.Model.Load("path/to/initial/model", out var modelInputSchema);
-
+            // Don't try to load a model initially, we'll create it in InitializeModel
+            // Leave _trainedModel initialized in InitializeModel method to avoid null reference issues
+            
             // Load or train initial model
             InitializeModel();
         }
@@ -199,6 +199,13 @@ namespace MentalHealth.Services
             try
             {
                 var testDataView = _mlContext.Data.LoadFromEnumerable(testData);
+                
+                // Check if model exists
+                if (_trainedModel == null)
+                {
+                    throw new InvalidOperationException("Model has not been trained yet.");
+                }
+                
                 var predictions = _trainedModel.Transform(testDataView);
 
                 var metrics = _mlContext.MulticlassClassification.Evaluate(predictions);
